@@ -64,10 +64,9 @@ internal class AnnotationManagerIntegrationTestCase: MapViewIntegrationTestCase 
             // Given
             let annotation = PointAnnotation(coordinate: mapView.centerCoordinate)
             let requiredIndex = 3
-            let position = LayerPosition.at(requiredIndex)
             let annotationManager = AnnotationManager(for: mapView,
                                                       with: self,
-                                                      options: AnnotationOptions(layerPosition: position))
+                                                      options: AnnotationOptions(layerPosition: .at(requiredIndex)))
             annotationManager.addAnnotation(annotation)
 
             guard let layerId = annotationManager.layerId(for: PointAnnotation.self) else {
