@@ -67,9 +67,3 @@ public protocol Layer: Codable {
     /// The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
     var maxZoom: Double? { get set }
 }
-
-public extension LayerPosition {
-    convenience init(above: String? = nil, below: String? = nil, at: Int? = nil) {
-        self.init(__above: above, below: below, at: at?.NSNumber)
-    }
-}

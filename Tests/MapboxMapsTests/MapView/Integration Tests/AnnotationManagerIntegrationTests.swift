@@ -64,7 +64,7 @@ internal class AnnotationManagerIntegrationTestCase: MapViewIntegrationTestCase 
             // Given
             let annotation = PointAnnotation(coordinate: mapView.centerCoordinate)
             let requiredIndex = 3
-            let position = LayerPosition(above: nil, below: nil, at: requiredIndex)
+            let position = LayerPosition.at(requiredIndex)
             let annotationManager = AnnotationManager(for: mapView,
                                                       with: self,
                                                       options: AnnotationOptions(layerPosition: position))

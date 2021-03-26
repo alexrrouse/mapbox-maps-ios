@@ -47,7 +47,7 @@ public class Style {
             let layerData = try JSONEncoder().encode(layer)
             //swiftlint:disable force_cast
             let layerJSON = try JSONSerialization.jsonObject(with: layerData) as! [String: AnyObject]
-            let expected = try! styleManager.addStyleLayer(forProperties: layerJSON, layerPosition: layerPosition)
+            let expected = try! styleManager.addStyleLayer(forProperties: layerJSON, layerPosition: layerPosition?.corePosition)
 
             if expected.isError() {
                 return .failure(.addStyleLayerFailed(expected.error as? String))
@@ -83,7 +83,7 @@ public class Style {
         }
 
         let expectedAddition = try styleManager.addStyleLayer(forProperties: expectedProperties.value as Any,
-                                                              layerPosition: position)
+                                                              layerPosition: position.corePosition)
 
         if expectedAddition.isError() {
             throw LayerError.addStyleLayerFailed(expectedAddition.error as? String)

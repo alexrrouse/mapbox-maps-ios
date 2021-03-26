@@ -91,7 +91,7 @@ internal class StyleIntegrationTests: MapViewIntegrationTestCase {
             do {
                 for step in stride(from: 0, to: layers.count, by: 3) {
 
-                    let newLayerPosition = LayerPosition(above: nil, below: nil, at: step)
+                    let newLayerPosition: LayerPosition = .at(step)
                     try style._moveLayer(with: "test-id", to: newLayerPosition)
 
                     // Get layer position
