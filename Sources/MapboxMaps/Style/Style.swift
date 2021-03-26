@@ -36,6 +36,7 @@ public class Style {
     /**
      Adds a `layer` to the map
      - Parameter layer: The layer to apply on the map
+     - Parameter layerPosition: Position within the layer stack to add the map 
      - Returns: If operation successful, returns a `true` as part of the `Result`
                 success case. Else, returns a `LayerError` in the `Result` failure case.
      */
