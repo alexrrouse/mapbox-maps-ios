@@ -21,6 +21,7 @@ public class DebugViewController: UIViewController {
             mapOptions.location.puckType = .puck2D()
         }
 
+        mapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         view.addSubview(mapView)
 
         /**

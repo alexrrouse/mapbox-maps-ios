@@ -11,6 +11,8 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
     // MARK: - Properties
 
+    internal var scaleBarContainer: UIView = UIView()
+
     internal var metersPerPoint: CLLocationDistance = 1 {
         didSet {
             guard metersPerPoint != oldValue else {
@@ -19,7 +21,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
             updateVisibility()
             needsRecalculateSize = true
-            invalidateIntrinsicContentSize()
+            updateScaleBarConstraints()
         }
     }
 
@@ -60,8 +62,6 @@ internal class MapboxScaleBarOrnamentView: UIView {
         view.layer.cornerRadius = Constants.barHeight / 2.0
         view.layer.masksToBounds = true
 
-        addSubview(view)
-
         return view
     }()
 
@@ -86,7 +86,6 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
     private var labelImageCache: [CLLocationDistance: UIImage] = [:]
     private var lastLabelWidth: CGFloat = Constants.scaleBarLabelWidthHint
-    private var size = CGSize()
     private var needsRecalculateSize = false
     private var shouldLayoutBars = false
 
@@ -108,10 +107,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
     internal override var intrinsicContentSize: CGSize {
         // Size is calculated elsewhere - since 'intrinsicContentSize' is part of the
         // constraint system, this should be done in 'updateConstraints'
-        guard size.width >= 0 else {
-            return CGSize()
-        }
-        return size
+        return CGSize(width: 0, height: 16)
     }
 
     // MARK: - Initialization
@@ -134,6 +130,15 @@ internal class MapboxScaleBarOrnamentView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = false
 
+        scaleBarContainer.frame = CGRect(x: 8,
+                                         y: intrinsicContentSize.height - Constants.barHeight,
+                                         width: 300,
+                                         height: Constants.barHeight)
+        scaleBarContainer.backgroundColor = .clear
+        addSubview(scaleBarContainer)
+
+        scaleBarContainer.addSubview(containerView)
+
         addZeroLabel()
 
         NotificationCenter.default.addObserver(self,
@@ -144,14 +149,13 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
     // MARK: - Layout
 
-    // The primary job of 'updateConstraints' here is to recalculate the
+    // The primary job of 'updateScaleBarConstraints' here is to recalculate the
     // 'intrinsicContentSize:', 'metersPerPoint' and the maximum width determine the
     // current 'row', which in turn determines the "actualWidth". To obtain the full
     // width of the scale bar, we also need to include some space for the "last"
     // label
-    internal override func updateConstraints() {
+    internal func updateScaleBarConstraints() {
         guard !isHidden && needsRecalculateSize else {
-            super.updateConstraints()
             return
         }
 
@@ -163,7 +167,6 @@ internal class MapboxScaleBarOrnamentView: UIView {
         let totalBarWidth = actualWidth()
 
         guard totalBarWidth > 0.0 else {
-            super.updateConstraints()
             return
         }
 
@@ -177,12 +180,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
             updateLabels()
         }
 
-        let halfLabelWidth = ceil(lastLabelWidth / 2)
-
-        size = CGSize(width: totalBarWidth + halfLabelWidth, height: 16)
-
         setNeedsLayout()
-        super.updateConstraints() // This calls intrinsicContentSize
     }
 
     internal override func layoutSubviews() {
@@ -195,7 +193,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
         needsRecalculateSize = false
 
         let totalBarWidth = actualWidth()
-        guard size.width > 0 && totalBarWidth > 0 else {
+        guard totalBarWidth > 0 else {
             return
         }
 
@@ -212,7 +210,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
         let barOffset = isRightToLeft ? halfLabelWidth : 0.0
 
         containerView.frame = CGRect(x: barOffset,
-                                     y: intrinsicContentSize.height - Constants.barHeight,
+                                     y: 16 - Constants.barHeight,
                                      width: totalBarWidth,
                                      height: Constants.barHeight)
         layoutBars(with: barWidth)
