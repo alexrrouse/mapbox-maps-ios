@@ -38,6 +38,7 @@ internal class MapboxCompassOrnamentView: UIButton {
             }
         }
     }
+
     internal var compassContainerView = UIImageView()
 
     required internal init(visibility: OrnamentVisibility) {
@@ -59,9 +60,9 @@ internal class MapboxCompassOrnamentView: UIButton {
         if let image = createCompassImage() {
             let bounds = CGRect(origin: .zero, size: image.size)
             compassContainerView.frame = bounds
-            setImage(image, for: .normal)
+            compassContainerView.image = image
             compassContainerView.alpha = visibility == .visible ? 1 : 0
-            self.addSubview(compassContainerView)
+            addSubview(compassContainerView)
             NSLayoutConstraint.activate([
                 widthAnchor.constraint(equalToConstant: image.size.width),
                 heightAnchor.constraint(equalToConstant: image.size.height)
@@ -240,10 +241,6 @@ internal class MapboxCompassOrnamentView: UIButton {
         UIGraphicsEndImageContext()
 
         return image
-    }
-
-    override func setImage(_ image: UIImage?, for state: UIControl.State) {
-        compassContainerView.image = image
     }
 }
 

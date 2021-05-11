@@ -15,6 +15,7 @@ extension MapboxScaleBarOrnamentView {
         internal static let scaleBarMinimumBarWidth: CGFloat = 30.0 // Arbitrary
         internal static let scaleBarXPosition: CGFloat = 8
         internal static let scaleBarContainerWidth: CGFloat = 300
+        internal static let scaleBarContainerHeight: CGFloat = 12
 
         internal static let metricTable: [Row] = [
             (distance: 1, numberOfBars: 2),
