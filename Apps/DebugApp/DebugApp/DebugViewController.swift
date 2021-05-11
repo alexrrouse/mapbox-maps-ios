@@ -21,7 +21,6 @@ public class DebugViewController: UIViewController {
             mapOptions.location.puckType = .puck2D()
         }
 
-        mapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         view.addSubview(mapView)
 
         /**
@@ -90,19 +89,5 @@ public class DebugViewController: UIViewController {
 
             print("The map failed to load.. \(type) = \(message)")
         }
-    }
-
-    var willCount = 0
-
-    public override func viewWillLayoutSubviews() {
-        willCount += 1
-        print("viewWillLayoutSubviews \(willCount)")
-    }
-
-    var didCount = 0
-
-    public override func viewDidLayoutSubviews() {
-        didCount += 1
-        print("viewDidLayoutSubviews \(didCount)")
     }
 }
