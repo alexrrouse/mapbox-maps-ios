@@ -19,9 +19,9 @@ internal class MapboxScaleBarOrnamentView: UIView {
                 return
             }
 
-//            updateVisibility()
-//            needsRecalculateSize = true
-//            updateScaleBarConstraints()
+            updateVisibility()
+            needsRecalculateSize = true
+            updateScaleBarConstraints()
         }
     }
 
