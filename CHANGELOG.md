@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## main
 
+### Bug fixes 🐞
+
+- Fixed an issue where map camera changes could trigger `layoutSubviews()` for ornaments. ([#338](https://github.com/mapbox/mapbox-maps-ios/pull/338))
+
 ## 10.0.0-beta.19.1 - May 7, 2021
 
 ### Breaking changes ⚠️
