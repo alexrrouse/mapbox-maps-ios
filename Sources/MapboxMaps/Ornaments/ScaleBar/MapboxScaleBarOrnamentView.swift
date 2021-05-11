@@ -86,7 +86,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
     private var labelImageCache: [CLLocationDistance: UIImage] = [:]
     private var lastLabelWidth: CGFloat = Constants.scaleBarLabelWidthHint
-    var size: CGSize = CGSize()
+    var size = CGSize()
     private var needsRecalculateSize = false
     private var shouldLayoutBars = false
 
@@ -131,9 +131,9 @@ internal class MapboxScaleBarOrnamentView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = false
 
-        scaleBarContainer.frame = CGRect(x: 8,
+        scaleBarContainer.frame = CGRect(x: Constants.scaleBarXPosition,
                                          y: intrinsicContentSize.height - Constants.barHeight,
-                                         width: 300,
+                                         width: Constants.scaleBarContainerWidth,
                                          height: Constants.barHeight)
         scaleBarContainer.backgroundColor = .clear
         addSubview(scaleBarContainer)
