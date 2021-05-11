@@ -90,4 +90,8 @@ public class DebugViewController: UIViewController {
             print("The map failed to load.. \(type) = \(message)")
         }
     }
+
+    public override func viewWillLayoutSubviews() {
+        print("laying out subviews")
+    }
 }
