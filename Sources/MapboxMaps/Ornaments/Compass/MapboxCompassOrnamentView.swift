@@ -31,19 +31,19 @@ internal class MapboxCompassOrnamentView: UIButton {
     /// Should be in range [-pi; pi]
     internal var currentBearing: CLLocationDirection = 0 {
         didSet {
-//            if oldValue != currentBearing {
+            if oldValue != currentBearing {
                 let adjustedBearing = currentBearing.truncatingRemainder(dividingBy: 360)
                 updateVisibility()
                 self.transform = CGAffineTransform(rotationAngle: -adjustedBearing.toRadians())
-//            }
+            }
         }
     }
-
+    internal var compassContainerView = UIImageView()
+    internal var imageLayer = CALayer()
     required internal init(visibility: OrnamentVisibility) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         self.visibility = visibility
-        alpha = visibility == .visible ? 1 : 0
         let bundle = Bundle.mapboxMaps
         accessibilityLabel = NSLocalizedString("COMPASS_A11Y_LABEL",
                                                tableName: Constants.localizableTableName,
@@ -57,12 +57,18 @@ internal class MapboxCompassOrnamentView: UIButton {
                                               comment: "Accessibility hint")
 
         if let image = createCompassImage() {
+            let bounds = CGRect(origin: .zero, size: image.size)
+            imageLayer.frame = bounds
+            imageLayer.contentsGravity = .resizeAspect
             setImage(image, for: .normal)
+            imageLayer.opacity = visibility == .visible ? 1 : 0
+            self.layer.addSublayer(imageLayer)
             NSLayoutConstraint.activate([
                 widthAnchor.constraint(equalToConstant: image.size.width),
                 heightAnchor.constraint(equalToConstant: image.size.height)
             ])
         }
+
 
         addTarget(self, action: #selector(didTap), for: .touchUpInside)
     }
@@ -86,9 +92,9 @@ internal class MapboxCompassOrnamentView: UIButton {
         }
     }
 
-    private func animate(toAlpha alpha: CGFloat) {
+    private func animate(toAlpha alpha: Float) {
         UIView.animate(withDuration: Constants.animationDuration) {
-            self.alpha = alpha
+            self.imageLayer.opacity = alpha
         }
     }
 
@@ -236,6 +242,10 @@ internal class MapboxCompassOrnamentView: UIButton {
         UIGraphicsEndImageContext()
 
         return image
+    }
+
+    override func setImage(_ image: UIImage?, for state: UIControl.State) {
+        imageLayer.contents = image
     }
 }
 
