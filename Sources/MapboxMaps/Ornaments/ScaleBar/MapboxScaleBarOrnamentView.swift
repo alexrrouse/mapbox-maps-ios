@@ -350,12 +350,12 @@ internal class MapboxScaleBarOrnamentView: UIView {
                               Constants.metricTable.last!.distance : Constants.imperialTable.last!.distance
         let alpha: CGFloat = maximumDistance > allowedDistance ? 0 : 1
 
-        if alpha != self.alpha {
+        if alpha != scaleBarContainer.alpha {
             UIView.animate(withDuration: 0.2,
                            delay: 0,
                            options: .beginFromCurrentState,
                            animations: {
-                            self.alpha = alpha
+                            self.scaleBarContainer.alpha = alpha
             },
                            completion: nil)
         }
