@@ -107,7 +107,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
     internal override var intrinsicContentSize: CGSize {
         // Size is calculated elsewhere - since 'intrinsicContentSize' is part of the
         // constraint system, this should be done in 'updateConstraints'
-        return CGSize(width: 0, height: 16)
+        return CGSize(width: 0, height: 8)
     }
 
     // MARK: - Initialization
