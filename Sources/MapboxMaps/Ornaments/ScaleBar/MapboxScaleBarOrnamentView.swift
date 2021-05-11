@@ -86,6 +86,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
     private var labelImageCache: [CLLocationDistance: UIImage] = [:]
     private var lastLabelWidth: CGFloat = Constants.scaleBarLabelWidthHint
+    var size: CGSize = CGSize()
     private var needsRecalculateSize = false
     private var shouldLayoutBars = false
 
@@ -107,7 +108,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
     internal override var intrinsicContentSize: CGSize {
         // Size is calculated elsewhere - since 'intrinsicContentSize' is part of the
         // constraint system, this should be done in 'updateConstraints'
-        return CGSize(width: 0, height: 8)
+        return size
     }
 
     // MARK: - Initialization
@@ -180,6 +181,9 @@ internal class MapboxScaleBarOrnamentView: UIView {
             updateLabels()
         }
 
+        let halfLabelWidth = ceil(lastLabelWidth / 2)
+
+        size = CGSize(width: totalBarWidth + halfLabelWidth, height: 16)
         setNeedsLayout()
     }
 
@@ -210,7 +214,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
         let barOffset = isRightToLeft ? halfLabelWidth : 0.0
 
         containerView.frame = CGRect(x: barOffset,
-                                     y: 16 - Constants.barHeight,
+                                     y: 20 - Constants.barHeight,
                                      width: totalBarWidth,
                                      height: Constants.barHeight)
         layoutBars(with: barWidth)
