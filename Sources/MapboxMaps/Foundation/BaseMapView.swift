@@ -170,7 +170,9 @@ open class BaseMapView: UIView {
 
     public override func layoutSubviews() {
         super.layoutSubviews()
-        mapboxMap.size = bounds.size
+        if mapboxMap.size != bounds.size {
+            mapboxMap.size = bounds.size
+        }
     }
 
     func validateDisplayLink() {

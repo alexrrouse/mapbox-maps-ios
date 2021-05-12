@@ -21,7 +21,6 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
             updateVisibility()
             needsRecalculateSize = true
-            updateScaleBarConstraints()
         }
     }
 
@@ -128,7 +127,6 @@ internal class MapboxScaleBarOrnamentView: UIView {
     }
 
     private func commonInit() {
-        translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = false
 
         scaleBarContainer.frame = CGRect(x: Constants.scaleBarXPosition,
@@ -137,6 +135,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
                                          height: Constants.barHeight)
         scaleBarContainer.backgroundColor = .clear
         addSubview(scaleBarContainer)
+        scaleBarContainer.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
 
         scaleBarContainer.addSubview(containerView)
 
@@ -150,12 +149,12 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
     // MARK: - Layout
 
-    // The primary job of 'updateScaleBarConstraints' here is to recalculate the
-    // 'intrinsicContentSize:', 'metersPerPoint' and the maximum width determine the
+    // The primary job of 'updateScaleBarConstraints' here is to recalculate
+    // 'metersPerPoint' and the maximum width determine the
     // current 'row', which in turn determines the "actualWidth". To obtain the full
     // width of the scale bar, we also need to include some space for the "last"
     // label
-    internal func updateScaleBarConstraints() {
+    internal func updateScaleBar() {
         guard !isHidden && needsRecalculateSize else {
             return
         }
