@@ -21,6 +21,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
 
             updateVisibility()
             needsRecalculateSize = true
+            updateScaleBar()
         }
     }
 
